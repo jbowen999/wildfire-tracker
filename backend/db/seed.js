@@ -139,6 +139,11 @@ async function replaceFires(db, fires) {
   await staging.rename("fires", { dropTarget: true });
 }
 
+/*
+Really like this. Building and indexing fires_staging and then renaming it over fires means a 
+failed or partial NIFC download can never wipe the live data. The MIN_FIRES check is a nice extra safety net.
+*/
+
 // Seed metadata for the UI: "as of [seed date]" label and record count
 async function writeSeedMeta(db) {
   const col = db.collection("fires");
